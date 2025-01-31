@@ -1,0 +1,55 @@
+;
+;	File 'topol.top' was generated
+;	By user: zuh (1000)
+;	On host: mcg20
+;	At date: Mon Sep 16 14:56:12 2024
+;
+;	This is a standalone topology file
+;
+;	Created by:
+;	                    :-) GROMACS - gmx pdb2gmx, 2022.3 (-:
+;	
+;	Executable:   /usr/local/gromacs/bin/gmx
+;	Data prefix:  /usr/local/gromacs
+;	Working dir:  /home/zuh/Working/AR_apalutamide_SCR3
+;	Command line:
+;	  gmx pdb2gmx -f prep_AR_apalu_Src3.pdb -o AR_apalu_coactivator.gro -ter -ignh
+;	Force field was read from the standard GROMACS share directory.
+;
+
+; Include forcefield parameters
+#include "amber99sb-ildn.ff/forcefield.itp"
+
+; Include chain topologies
+#include "topol_Protein_chain_A.itp"
+#include "topol_Protein_chain_B.itp"
+; Include ligand topology
+#include "ligand_AR_apalu_Src3_GMX.itp"
+; Ligand position restraints
+#ifdef POSRES
+#include "posre_apalu.itp"
+#endif
+; Include water topology
+#include "amber99sb-ildn.ff/tip3p.itp"
+
+#ifdef POSRES_WATER
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       1000       1000       1000
+#endif
+
+; Include topology for ions
+#include "amber99sb-ildn.ff/ions.itp"
+
+[ system ]
+; Name
+PROTEIN BINDING in water
+
+[ molecules ]
+; Compound        #mols
+Protein_chain_A     1
+Protein_chain_B     1
+apalu               1
+SOL         20308
+CL               8
